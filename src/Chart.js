@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import * as d3 from "d3";
 
 function Chart(props) {
-  const series = props.series;
-  const language = window.navigator.language || navigator.browserLanguage;
   useEffect(() => {
+    const series = props.series;
+    const language = window.navigator.language || navigator.browserLanguage;
     const axisXLabel =
       language === "es-Es" || language === "es" ? "Episodios" : "Episodes";
     const axisYLabel =
@@ -71,6 +71,7 @@ function Chart(props) {
       .attr("y", function (d) {
         return y(d.seasons) + 4;
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <div id={"#" + props.id}></div>;
