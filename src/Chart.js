@@ -3,8 +3,13 @@ import * as d3 from "d3";
 
 function Chart(props) {
   const series = props.series;
+  const language = window.navigator.language || navigator.browserLanguage;
   useEffect(() => {
-    const margin = { top: 20, right: 30, bottom: 30, left: 100 },
+    const axisXLabel =
+      language === "es-Es" || language === "es" ? "Episodios" : "Episodes";
+    const axisYLabel =
+      language === "es-Es" || language === "es" ? "Temporadas" : "Seasons";
+    const margin = { top: 20, right: 30, bottom: 100, left: 100 },
       width = (2 * window.innerWidth) / 3 - margin.left - margin.right,
       height = (2 * window.innerHeight) / 3 - margin.top - margin.bottom;
     const svg = d3
@@ -20,8 +25,22 @@ function Chart(props) {
       .append("g")
       .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(x));
+    svg
+      .append("text")
+      .attr("text-anchor", "end")
+      .attr("x", width / 2 + margin.left)
+      .attr("y", height + margin.top + 20)
+      .text(axisXLabel);
 
-    const y = d3.scaleLinear().domain([0, 20]).range([height, 0]).name("hola");
+    svg
+      .append("text")
+      .attr("text-anchor", "end")
+      .attr("transform", "rotate(-90)")
+      .attr("y", -margin.left + 50)
+      .attr("x", -margin.top - height / 2 + 20)
+      .text(axisYLabel);
+
+    const y = d3.scaleLinear().domain([0, 20]).range([height, 0]);
     svg.append("g").call(d3.axisLeft(y));
 
     svg
@@ -37,7 +56,7 @@ function Chart(props) {
         return y(d.seasons);
       })
       .attr("r", 5.5)
-      .style("fill", "#69b3a2");
+      .style("fill", "orange");
 
     svg
       .append("g")
