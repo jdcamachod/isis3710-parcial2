@@ -1,16 +1,21 @@
 import React from "react";
 import { Card } from "react-bootstrap";
+import { FormattedMessage } from "react-intl";
 
 function SeriesDetail(props) {
   return (
     <Card>
-      <Card.Img variant="top" src={props.serie.poster} />
+      {navigator.onLine ? (
+        <Card.Img variant="top" src={props.serie.poster}></Card.Img>
+      ) : (
+        <FormattedMessage id="imageErrorLoading" />
+      )}
       <Card.Body>
         <Card.Title>{props.serie.name}</Card.Title>
         <Card.Text>{props.serie.description}</Card.Text>
-        <Card.Footer>
+        <Card.Text>
           <a href={props.serie.webpage}>{props.serie.webpage}</a>
-        </Card.Footer>
+        </Card.Text>
       </Card.Body>
     </Card>
   );
